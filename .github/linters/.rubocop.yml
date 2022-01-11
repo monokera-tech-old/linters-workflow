@@ -1,0 +1,3 @@
+---
+inherit_from:
+  - https://raw.githubusercontent.com/monokera-tech/linters/master/.rubocop.yml

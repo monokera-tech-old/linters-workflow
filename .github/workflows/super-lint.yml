@@ -1,0 +1,39 @@
+---
+name: super-lint
+
+on: workflow_call
+
+jobs:
+  superlinter:
+    runs-on: ubuntu-latest
+
+    # Skip on dependabot PRs
+    if: startsWith(github.head_ref, 'dependabot') == false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+        with:
+          fetch-depth: 0
+
+      - name: "checkout reusable workflows"
+        uses: "actions/checkout@v2"
+        with:
+          repository: monokera-tech/linters-workflow
+          path: linters-workflow
+
+      - name: copy file
+        uses: canastro/copy-file-action@master
+        with:
+          source: "linters-workflow/.github/linters/."
+          target: ".github/linters/"
+          flags: '-r'
+
+      - name: Super-Linter
+        uses: docker://github/super-linter:slim-v4.8.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_ALL_CODEBASE: false
+          VALIDATE_JAVASCRIPT_STANDARD: false
+          RUBY_CONFIG_FILE: .rubocop.yml
+          DEFAULT_BRANCH: main

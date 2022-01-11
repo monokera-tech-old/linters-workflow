@@ -1,0 +1,46 @@
+name: "workflow"
+
+on: workflow_call
+
+jobs:
+
+  commit-lint:
+    runs-on: "ubuntu-latest"
+    container:
+      image: "monokera/commitlint"
+    outputs:
+      is-pull-request: "${{ steps.count-commits.outputs.is-pull-request }}"
+      fetch-depth: "${{ steps.count-commits.outputs.fetch-depth }}"
+      commits-count: "${{ steps.count-commits.outputs.commits-count }}"
+    steps:
+      - name: "checkout"
+        uses: "actions/checkout@v2"
+        with:
+          fetch-depth: 0
+
+      - name: "checkout reusable workflows"
+        uses: "actions/checkout@v2"
+        with:
+          repository: monokera-tech/linters-workflow
+          path: linters-workflow
+
+      - name: "count-commits"
+        id: "count-commits"
+        env:
+          EVENT_NAME: "${{ github.event_name }}"
+          BRANCH_REF: "${{ github.head_ref }}"
+          BRANCH_BASE_REF: "${{ github.base_ref }}"
+        run: "sh linters-workflow/.github/scripts/count-commits.sh"
+
+      - name: copy file
+        uses: canastro/copy-file-action@master
+        with:
+          source: "linters-workflow/.commitlintrc.js"
+          target: ".commitlintrc.js"
+
+
+      - name: "lint-commits"
+        env:
+          COMMITS_COUNT: "${{ steps.count-commits.outputs.commits-count }}"
+
+        run:  "sh linters-workflow/.github/scripts/lint-commits.sh"

@@ -1,0 +1,19 @@
+{
+    "extends": "stylelint-config-standard",
+    "rules": {
+        "color-named": "always-where-possible",
+        "value-no-vendor-prefix": null,
+        "max-nesting-depth": null,
+        "selector-max-compound-selectors": null,
+        "order/order": null,
+        "selector-no-qualifying-type": [
+            true,
+            {
+                "ignore": [
+                    "attribute",
+                    "class"
+                ]
+            }
+        ]
+    }
+}

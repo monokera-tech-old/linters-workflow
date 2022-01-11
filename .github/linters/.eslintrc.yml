@@ -1,0 +1,54 @@
+---
+#############################
+#############################
+## JavaScript Linter rules ##
+#############################
+#############################
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["react"],
+  "rules": {
+    "comma-dangle": ["error", "never"],
+    "import/prefer-default-export": ["off"],
+    "import/no-extraneous-dependencies": [
+      "error", {
+        "devDependencies": ["**/*[tT]est*.jsx", "**/*[tT]est*.js"]
+      }
+    ],
+    "no-param-reassign": ["off"],
+    "max-len": 0,
+    "react/forbid-prop-types": 0,
+    "object-curly-newline": [
+      "error", {
+          "multiline": true
+      }
+    ],
+    "jsx-a11y/click-events-have-key-events": ["off"],
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "jsx-a11y/label-has-associated-control": "off",
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    }
+  }
+}
+
