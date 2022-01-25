@@ -30,7 +30,7 @@ jobs:
           flags: '-r'
 
       - name: Super-Linter
-        uses: docker://github/super-linter:slim-v4.8.1
+        uses: docker://github/super-linter:slim-v4.8.5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_ALL_CODEBASE: false
