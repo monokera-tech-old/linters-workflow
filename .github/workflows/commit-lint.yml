@@ -1,9 +1,9 @@
-name: "workflow"
+---
+name: "commit-lint"
 
-on: workflow_call
+on: "workflow_call"
 
 jobs:
-
   commit-lint:
     runs-on: "ubuntu-latest"
     container:
@@ -18,11 +18,29 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: "checkout reusable workflows"
+      - name: "checkout-reusable-workflows"
         uses: "actions/checkout@v2"
         with:
-          repository: monokera-tech/linters-workflow
-          path: linters-workflow
+          repository: "monokera-tech/linters-workflow"
+          path: "linters-workflow"
+
+      - name: "copy-commitlint-config-file"
+        uses: "canastro/copy-file-action@master"
+        with:
+          source: "linters-workflow/.commitlintrc.js"
+          target: ".commitlintrc.js"
+
+      - name: "copy-commitlint-scripts"
+        uses: "canastro/copy-file-action@master"
+        with:
+          source: "linters-workflow/.github/scripts/."
+          target: ".github/scripts/"
+          flags: "-r"
+
+      - name: "remove-reusable-workflows"
+        uses: "JesseTG/rm@v1.0.2"
+        with:
+          path: "linters-workflow"
 
       - name: "count-commits"
         id: "count-commits"
@@ -30,17 +48,9 @@ jobs:
           EVENT_NAME: "${{ github.event_name }}"
           BRANCH_REF: "${{ github.head_ref }}"
           BRANCH_BASE_REF: "${{ github.base_ref }}"
-        run: "sh linters-workflow/.github/scripts/count-commits.sh"
-
-      - name: copy file
-        uses: canastro/copy-file-action@master
-        with:
-          source: "linters-workflow/.commitlintrc.js"
-          target: ".commitlintrc.js"
-
+        run: "sh .github/scripts/count-commits.sh"
 
       - name: "lint-commits"
         env:
           COMMITS_COUNT: "${{ steps.count-commits.outputs.commits-count }}"
-
-        run:  "sh linters-workflow/.github/scripts/lint-commits.sh"
+        run: "sh .github/scripts/lint-commits.sh"
