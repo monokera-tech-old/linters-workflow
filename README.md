@@ -46,11 +46,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-
-
 ### Why?
-
-
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -58,14 +54,10 @@
 
 The list any major frameworks/libraries used to bootstrap this project.
 
-
 <p align="right">(<a href="#top">back to top</a>)</p>
-
 
 <!-- GETTING STARTED -->
 ## Getting Started
-
-
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
