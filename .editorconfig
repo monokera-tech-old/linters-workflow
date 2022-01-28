@@ -15,3 +15,15 @@ insert_final_newline = true
 # Docs!
 [*.md]
 trim_trailing_whitespace = false
+
+# YAML files
+[*.{yml,yaml}]
+indent_size = 2
+
+# SH
+[*.sh]
+indent_size = 2
+
+# JSON
+[*.{js,json}]
+indent_size = 2
