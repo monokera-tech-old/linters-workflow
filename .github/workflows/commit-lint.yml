@@ -8,10 +8,6 @@ jobs:
     runs-on: "ubuntu-latest"
     container:
       image: "monokera/commitlint"
-    outputs:
-      is-pull-request: "${{ steps.count-commits.outputs.is-pull-request }}"
-      fetch-depth: "${{ steps.count-commits.outputs.fetch-depth }}"
-      commits-count: "${{ steps.count-commits.outputs.commits-count }}"
     steps:
       - name: "checkout"
         uses: "actions/checkout@v2"
@@ -42,15 +38,8 @@ jobs:
         with:
           path: "linters-workflow"
 
-      - name: "count-commits"
-        id: "count-commits"
+      - name: "lint-pr-commits"
         env:
-          EVENT_NAME: "${{ github.event_name }}"
           BRANCH_REF: "${{ github.head_ref }}"
           BRANCH_BASE_REF: "${{ github.base_ref }}"
-        run: "sh .github/scripts/count-commits.sh"
-
-      - name: "lint-commits"
-        env:
-          COMMITS_COUNT: "${{ steps.count-commits.outputs.commits-count }}"
-        run: "sh .github/scripts/lint-commits.sh"
+        run: "sh .github/scripts/lint-pr-commits.sh"
