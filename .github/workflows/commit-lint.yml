@@ -23,8 +23,8 @@ jobs:
       - name: "copy-commitlint-config-file"
         uses: "canastro/copy-file-action@master"
         with:
-          source: "linters-workflow/.commitlintrc.js"
-          target: ".commitlintrc.js"
+          source: "linters-workflow/.commitlintrc.yaml"
+          target: ".commitlintrc.yaml"
 
       - name: "copy-commitlint-scripts"
         uses: "canastro/copy-file-action@master"
