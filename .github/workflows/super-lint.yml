@@ -44,8 +44,7 @@ jobs:
       - name: "super-linter"
         uses: "docker://github/super-linter:slim-v4.8.5"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           VALIDATE_ALL_CODEBASE: false
           VALIDATE_JAVASCRIPT_STANDARD: false
-          RUBY_CONFIG_FILE: ".rubocop.yml"
           DEFAULT_BRANCH: "main"
