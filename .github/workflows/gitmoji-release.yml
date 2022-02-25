@@ -1,0 +1,29 @@
+---
+name: "gitmoji-release"
+
+on:
+  workflow_call:
+    secrets:
+      GH_ASTRO_DEBOT_PAT:
+        description: "Required Github Astro DeBOT PAT"
+        required: true
+
+jobs:
+  gitmoji-release:
+    runs-on: "ubuntu-latest"
+    container:
+      image: "monokera/gitmoji-release"
+    steps:
+      - name: "checkout"
+        uses: "actions/checkout@v2"
+        with:
+          fetch-depth: 0
+
+      - name: "generate-release-if-needed"
+        env:
+          GITHUB_REPOSITORY: "${{ env.GITHUB_REPOSITORY }}"
+          GITHUB_API_URL: "${{ env.GITHUB_API_URL }}"
+          GH_ASTRO_DEBOT_PAT: "${{ secrets.GH_ASTRO_DEBOT_PAT }}"
+          VERSION_FILE: "VERSION"
+          LOG_LEVEL: "DEBUG"
+        run: "gitmoji-release"
