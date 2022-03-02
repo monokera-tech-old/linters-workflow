@@ -14,7 +14,7 @@ jobs:
     if: "startsWith(github.head_ref, 'dependabot') == false"
     steps:
       - name: "checkout"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v3"
         with:
           fetch-depth: 0
 
@@ -24,7 +24,7 @@ jobs:
           GIT_CRYPT_KEY: "${{ secrets.GIT_CRYPT_KEY }}"
 
       - name: "checkout-reusable-workflows"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v3"
         with:
           repository: "monokera-tech/linters-workflow"
           path: "linters-workflow"
