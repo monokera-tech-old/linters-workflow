@@ -15,7 +15,7 @@ on:
         required: true
 
 jobs:
-  super-lint:
+  git-crypt-add:
     runs-on: "ubuntu-latest"
     if: "startsWith(github.head_ref, 'dependabot') == false"
     steps:
