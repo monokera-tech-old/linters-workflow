@@ -31,7 +31,7 @@ jobs:
 
       - name: "Import key and Add user"
         run: |
-          "echo ${{ secrets.USER_KEY }} > user_key.gpg"
+          echo "${{ secrets.USER_KEY }}" > user_key.gpg
           gpg --import user_key.gpg
           "git-crypt add-gpg-user -n --trusted ${{ secrets.USER_EMAIL }}"
           rm -rf user_key.gpg
