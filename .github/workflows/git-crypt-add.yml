@@ -7,8 +7,8 @@ on:
       GIT_CRYPT_KEY:
         description: "Required Base64 encoded git-crypt key"
         required: true
-      USER_EMAIL:
-        description: "Required user email used in gpg key for git-crypt"
+      USER_KEY_ID:
+        description: "Required *user* gpg key ID for git-crypt"
         required: true
       USER_KEY:
         description: "Required *user* Base64 encoded git-crypt key"
@@ -34,7 +34,7 @@ jobs:
           echo "${{ secrets.USER_KEY }}" > user_key.gpg
           gpg --import user_key.gpg
           sudo apt install -y git-crypt
-          git-crypt add-gpg-user -n --trusted "${{ secrets.USER_EMAIL }}"
+          git-crypt add-gpg-user -n --trusted "${{ secrets.USER_KEY_ID }}"
           rm -rf user_key.gpg
 
       - name: Create Pull Request
