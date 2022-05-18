@@ -1,0 +1,46 @@
+---
+name: "super-lint"
+
+on:
+  workflow_call:
+    secrets:
+      GIT_CRYPT_KEY:
+        description: "Required Base64 encoded git-crypt key"
+        required: true
+      USER_EMAIL:
+        description: "Required user email used in gpg key for git-crypt"
+        required: true
+      USER_KEY:
+        description: "Required *user* Base64 encoded git-crypt key"
+        required: true
+
+jobs:
+  super-lint:
+    runs-on: "ubuntu-latest"
+    if: "startsWith(github.head_ref, 'dependabot') == false"
+    steps:
+      - name: "checkout"
+        uses: "actions/checkout@v2"
+        with:
+          fetch-depth: 0
+
+      - name: "unlock-secrets"
+        uses: "acactown/github-action-git-crypt-unlock@master"
+        env:
+          GIT_CRYPT_KEY: "${{ secrets.GIT_CRYPT_KEY }}"
+
+      - name: "Import key and Add user"
+        run: |
+          "echo ${{ secrets.USER_KEY }} > user_key.gpg"
+          gpg --import user_key.gpg
+          "git-crypt add-gpg-user -n --trusted ${{ secrets.USER_EMAIL }}"
+          rm -rf user_key.gpg
+          git commit -m
+
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v4
+        with:
+          commit-message: "Add ${{ secrets.USER_EMAIL }} as git-crypt collaborator"
+          branch: "git-crypt/add-${{ secrets.USER_EMAIL }}"
+          title: "Add ${{ secrets.USER_EMAIL }} as git-crypt collaborator"
