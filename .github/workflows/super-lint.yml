@@ -37,7 +37,7 @@ jobs:
           flags: "-r"
 
       - name: "remove-reusable-workflows"
-        uses: "JesseTG/rm@v1.0.2"
+        uses: "JesseTG/rm@v1.0.3"
         with:
           path: "linters-workflow"
 
