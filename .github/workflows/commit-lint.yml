@@ -10,12 +10,12 @@ jobs:
       image: "monokera/commitlint"
     steps:
       - name: "checkout"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v4"
         with:
           fetch-depth: 0
 
       - name: "checkout-reusable-workflows"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v4"
         with:
           repository: "monokera-tech/linters-workflow"
           path: "linters-workflow"
