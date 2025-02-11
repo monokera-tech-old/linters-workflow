@@ -21,13 +21,13 @@ jobs:
           path: "linters-workflow"
 
       - name: "copy-commitlint-config-file"
-        uses: "canastro/copy-file-action@master"
+        uses: "canastro/copy-action@master"
         with:
           source: "linters-workflow/.commitlintrc.yaml"
           target: ".commitlintrc.yaml"
 
       - name: "copy-commitlint-scripts"
-        uses: "canastro/copy-file-action@master"
+        uses: "canastro/copy-action@master"
         with:
           source: "linters-workflow/.github/scripts/."
           target: ".github/scripts/"
